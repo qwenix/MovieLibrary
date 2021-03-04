@@ -1,0 +1,52 @@
+﻿@page
+@model WebLibrary.Pages.MovieCollectionInfoModel
+@{
+    ViewData["Title"] = Model.MovieCollection.Name;
+}
+
+<div id="modalBox" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Редагувати колекцію</h4>
+            </div>
+            <form class="form-horizontal" method="post">
+                <input type="text" name="collectionId" value="@Model.MovieCollection.Id" id="currentCollection" hidden />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Назва</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" asp-for="NewCollectionName" value="@Model.MovieCollection.Name">
+                            <span asp-validation-for="NewCollectionName"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                    <input type="submit" asp-page-handler="ByEdit" class="btn btn-primary" value="Зберегти">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="relative">
+    <h2 class="toolbar-header">@Model.MovieCollection.Name</h2>
+    <div class="glyphicon-large toolbar collection-toolbar">
+        <a class="glyphicon glyphicon-save-file print-icon" title="Завантажити інформацію про колекцію" asp-page="MovieCollectionInfo" asp-route-id="@Model.MovieCollection.Id" asp-page-handler="ByDownloadInfo"></a>
+        <a class="glyphicon glyphicon-pencil edit-icon" title="Редагувати назву" href="#modalBox" data-toggle="modal"></a>
+        <a class="glyphicon glyphicon-trash remove-icon" title="Видалити колекцію" href="#removeConfirm" data-toggle="modal" onclick="setRemoveId('@Model.MovieCollection.Id', 'ByRemoveCollection')"></a>
+    </div>
+    <hr />
+    @if (Model.MovieCollection.Movies.Count() > 0) {
+        foreach (var m in Model.MovieCollection.Movies) {
+            <a asp-page="MovieInfo" asp-route-movieId="@m.Id" class="text-large">@m.Title</a>
+            <span class="glyphicon glyphicon-remove remove-icon small" title="Видалити з колекції" href="#removeConfirm" data-toggle="modal" onclick="setMovieRemoveParams('@m.Id')"></span>
+            <br />
+        }
+    }
+    else {
+        <span>Колекція не містить жодного фільму (<a asp-page="Index">Каталог фільмів</a>)</span>
+    }
+</div>
+

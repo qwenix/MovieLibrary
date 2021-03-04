@@ -1,0 +1,332 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */ 
+    .carousel-caption {
+        display: none;
+    }
+}
+
+
+
+
+/*Masony styles*/
+
+/* Grid */
+#posts {
+    margin: 5px auto 0;
+}
+
+.post {
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    line-height: 10em;
+    border-radius: 7px;
+    box-shadow: 0 0 3px black;
+}
+
+.post:hover {
+    background: #E9E9E9;
+}
+
+.post a {
+    font-size: 25px;
+    line-height: normal;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.post a:hover {
+    text-decoration: none;
+}
+
+/* Medium devices */
+
+@media (min-width: 768px) {
+    #grid > #posts .post {
+        width: 335px;
+    }
+
+        #grid > #posts .post.cs2 {
+            width: 100%;
+        }
+
+    .post img {
+        padding: 0;
+    }
+}
+/* Medium devices */
+
+@media (min-width: 992px) {
+    #grid > #posts .post {
+        width: 445px;
+    }
+
+        #grid > #posts .post.cs2 {
+            width: 100%;
+        }
+}
+/* Large devices */
+
+@media (min-width: 1200px) {
+    #grid > #posts .post {
+        width: 346px;
+    }
+
+        #grid > #posts .post.cs2 {
+            width: 742px;
+        }
+}
+
+@media (min-width: 1300px) {
+    #grid {
+        left: -50px;
+        padding-left: 50px;
+        padding-right: 50px;
+        position: relative;
+    }
+
+    #grid.container {
+        left: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+.glyphicon:hover {
+    text-decoration: none;
+}
+
+.out-link {
+    text-decoration: none;
+    color: #333333;
+}
+
+.glyphicon-large {
+    font-size: 23px;
+}
+
+.toolbar {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+}
+
+.toolbar span {
+    cursor: pointer;
+}
+
+.movie-toolbar {
+    width: 140px;
+    top: 30px;
+    right: 0;
+}
+
+.collection-toolbar {
+    top: 5px;
+    right: 0;
+    width: 105px;
+}
+
+.edit-icon:hover {
+    color: #C28B00;
+}
+
+.remove-icon:hover {
+    color: #FF4242;
+}
+
+.add-icon:hover {
+    color: #00AC00;
+}
+
+.print-icon:hover {
+    color: #B500C2;
+}
+
+.relative {
+    position: relative;
+}
+
+/*Sorted table style*/
+.table-sort th {
+    cursor: pointer;
+}
+
+th.sorted[data-order="1"] {
+    text-shadow: 0 0 0.5px black;
+}
+
+
+
+
+/* Validation */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+
+
+
+
+#Genre_Summary {
+    min-height: 134px;
+    min-width: 360px;
+    max-width: 460px;
+}
+
+
+
+
+.can-remove input, .can-remove select {
+    display: inline-block;
+    width: 70%;
+}
+
+.el-inline {
+    display: inline-block;
+}
+
+.d-li {
+    padding: 3px 0;
+}
+
+.list-unstyled {
+    margin-bottom: 0;
+}
+
+.g-list {
+    width: 150px;
+    margin: 7px 0 7px 0;
+}
+
+td {
+    vertical-align: middle !important;
+}
+
+.form-editor-nav a {
+    margin-right: 5px;
+}
+
+.table-header {
+    font-size: 16px;
+}
+
+.toolbar-header {
+    margin-right: 85px;
+}
+
+.a-btn {
+    background-color: #DDDDDD;
+    color: #333333;
+}
+
+.m-logo {
+    display: inline-block;
+    margin: 0 30px 20px 0;
+}
+
+.wrapper {
+    padding: 2%;
+    width: 80%;
+    min-width: 400px;
+}
+
+#searchForm {
+    width: 300px;
+}
+
+#inputSearch {
+    width: 250px;
+    max-width: 250px;
+}
+
+.head-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0 15px 0;
+}
+
+video {
+    display: block;
+}
+
+.movie-info-video {
+    width: 90%;
+    margin: 3% 5%;
+}
+
+#hiddenInput {
+    width: 0px;
+    border: none;
+}
+
+.text-cursive {
+    font-style: italic;
+}
+
+.text-large {
+    font-size: 16px;
+}
+
+.glyphicon {
+    cursor: pointer;
+}
+
+.search-year {
+    margin-bottom: 5px;
+    display: inline-block;
+}

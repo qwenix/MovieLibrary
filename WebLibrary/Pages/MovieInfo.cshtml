@@ -1,0 +1,78 @@
+﻿@page
+@model WebLibrary.Pages.MovieInfoModel
+@{
+    ViewData["Title"] = Model.Movie.Title;
+}
+<br>
+@Html.ValidationSummary(true)
+<h2>@Model.Movie.Title</h2>
+<div id="addToCollectionBox" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Додати до колекції</h4>
+            </div>
+            <form class="form-horizontal" method="post">
+                <input type="text" name="id" value="@Model.Movie.Id" hidden>
+                <div class="modal-body">
+                    <div class="form-group">
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-8">
+                            <select class="form-control" asp-for="CollectionName">
+                                @foreach (var c in Model.MovieCollections) {
+                                    <option>@c.Name</option>
+                                }
+                            </select>
+                            <span class="text-info small text-cursive">Оберіть колекцію, щоб додати до неї даний фільм.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Вихід</button>
+                    <button type="submit" asp-page-handler="ByAddToCollection" class="btn btn-primary">Додати</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper relative">
+    <div class="glyphicon-large toolbar movie-toolbar">
+        <a class="glyphicon glyphicon-save-file print-icon" title="Завантажити інформацію про фільм" asp-page="MovieInfo" asp-route-movieId="@Model.Movie.Id" asp-page-handler="ByDownloadInfo"></a>
+        <a class="glyphicon glyphicon-pencil edit-icon" title="Редагувати" asp-page="MovieEditor" asp-page-handler="ByEdit" asp-route-movieId="@Model.Movie.Id"></a>
+        <a class="glyphicon glyphicon-trash remove-icon" title="Видалити" href="#removeConfirm" data-toggle="modal" onclick="setRemoveId('@Model.Movie.Id')"></a>
+        <a class="glyphicon glyphicon-plus add-icon" title="Додати до колекції" href="#addToCollectionBox" data-toggle="modal"></a>
+    </div>
+    @if (Model.Movie.ImageName != null) {
+        <img src="~/files/logos/@Model.Movie.ImageName" width="250" class="m-logo"> <br>
+    }
+    <b>Оцінка: </b>@Model.Movie.Rate    <br>
+    <b>Рік: </b>@Model.Movie.Year   <br>
+    @if (Model.Movie.Genres.Count > 0) {
+        <b>Жанри: </b>
+        @String.Join(", ", Model.Movie.Genres)
+        <br>
+    }
+    <b>Режисери:</b>
+    @String.Join(", ", Model.Movie.Directors)
+    <br>
+    @if (Model.Movie.Actors.Count > 0) {
+        <b>Актори:</b>
+        @String.Join(", ", Model.Movie.Actors)
+        <br>
+    }
+    @if (Model.Movie.Studios.Count > 0) {
+        <b>Студія:</b>
+        @String.Join(", ", Model.Movie.Studios)
+        <br>
+    }
+    <br>
+    <b>Опис:</b>    <br>
+    @Model.Movie.Summary    <br><br>
+    @if (Model.Movie.VideoName != null) {
+        <video src="~/files/videos/@Model.Movie.VideoName" class="movie-info-video" controls></video>
+    }
+</div>
+

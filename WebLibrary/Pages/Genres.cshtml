@@ -1,0 +1,68 @@
+﻿@page
+@model WebLibrary.Pages.GenresModel
+@{ ViewData["Title"] = "Жанри";
+}
+
+<div id="modalBox" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="modalBoxTitle"></h4>
+            </div>
+            <form class="form-horizontal" method="post">
+                <input type="text" asp-for="Genre.Id" hidden/>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Назва*</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" asp-for="Genre.Name" placeholder="Назва жанру">
+                            <span asp-validation-for="Genre.Name"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Опис*</label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control" asp-for="Genre.Summary" placeholder="Коротка характеристика жанру"></textarea>
+                            <span asp-validation-for="Genre.Summary"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Вихід</button>
+                    <button type="submit" asp-page-handler="BySave" class="btn btn-primary" id="submitBtn">Зберегти</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+@Html.ValidationSummary(true)
+<h2>Жанри</h2>
+<a href="#modalBox" class="btn btn-link" data-toggle="modal" onclick="setDefaultParams()">Додати жанр</a>
+<table class="table table-hover">
+    <thead>
+        <tr class="table-header">
+            <th scope="col" class="text-center">Назва</th>
+            <th scope="col" class="text-center">Характерний опис</th>
+            <th scope="col" class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var g in Model.Genres) {
+            <tr class="text-center">
+                <td><b>@g.Name</b></td>
+                <td class="text-left" width="700">@g.Summary</td>
+                <td width="200">
+                    <form method="post" class="form-editor-nav">
+                        <a href="#modalBox" class="btn btn-link" data-toggle="modal" onclick="setStartParams('@g.Id', '@g.Name', '@g.Summary')">Редагувати</a>  <br>
+                        <a href="#removeConfirm" data-toggle="modal" onclick="setRemoveId('@g.Id')">Видалити</a>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

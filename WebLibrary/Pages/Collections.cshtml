@@ -1,0 +1,62 @@
+﻿@page
+@model WebLibrary.Pages.CollectionsModel
+@{
+    ViewData["Title"] = "Колекції";
+}
+
+<h2>Колекції</h2>
+
+<div id="modalBox" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Додати колекцію</h4>
+            </div>
+            <form class="form-horizontal" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Назва</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" asp-for="Collection.Name">
+                            <span asp-validation-for="Collection.Name"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                    <input type="submit" class="btn btn-primary" value="Зберегти">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="head-panel">
+    <div>
+        <div>
+            <form class="form-horizontal" method="get">
+                <div class="input-group search" id="inputSearch">
+                    <input type="text" class="form-control" asp-for="SearchedCollectionName" value="@Model.SearchedCollectionName" placeholder="Пошук за назвою...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <a href="#modalBox" data-toggle="modal" class="btn btn-default">Нова колекція</a>
+</div>
+<hr />
+<div class="container" id="grid">
+    <div id="posts">
+        @foreach (var c in Model.MovieCollections) {
+            <div class="post">
+                <a class="out-link" asp-page="/MovieCollectionInfo" asp-route-id="@c.Id">@c.Name</a>
+            </div>
+        }
+    </div>
+</div>
+

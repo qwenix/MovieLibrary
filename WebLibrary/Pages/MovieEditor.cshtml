@@ -1,0 +1,161 @@
+﻿@page
+@model WebLibrary.Pages.MovieEditorModel
+@{
+    ViewData["Title"] = "Редактор фільмів";
+}
+<h2>@Model.Header</h2>
+<br>
+<form class="form-horizontal" method="post" enctype="multipart/form-data" id="movieEditorForm">
+    <div class="form-group">
+        @Html.ValidationSummary(true)
+    </div>
+    <input type="text" asp-for="Movie.Id" value="@Model.Movie.Id" hidden/>
+    <input type="text" asp-for="Movie.ImageName" value="@Model.Movie.ImageName" hidden />
+    <input type="text" asp-for="Movie.VideoName" value="@Model.Movie.VideoName" hidden />
+    <div class="form-group">
+        <label for="Movie_Title" class="col-sm-2 control-label">Назва*</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" placeholder="Назва стрічки" asp-for="Movie.Title" value="@Model.Movie.Title">
+            <span asp-validation-for="Movie.Title"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="genres">Жанри*</label>
+        <div class="col-sm-3 can-remove">
+            <ul class="list-unstyled" id="genreList">
+                <li class="d-li">
+                    <select class="form-control" onchange="addGenre(this, 'Movie.Genres')">
+                        <option selected value=""></option>
+                        @foreach (var genre in Model.Genres) {
+                            <option>@genre</option>
+                        }
+                    </select>
+                </li>
+                @if (Model.Movie.Genres != null) {
+                    @foreach (var g in Model.Movie.Genres) {
+                        <li class="d-li">
+                            <input type='text' asp-for="Movie.Genres" class='form-control' value='@g' readonly>
+                            <span class='btn btn-link glyphicon glyphicon-remove' onclick='this.parentElement.remove()'></span>
+                        </li>
+                    }
+                }
+                <li class="d-li" hidden>
+                    <input type='text' class='form-control' readonly>
+                    <span class='btn btn-link glyphicon glyphicon-remove' onclick='this.parentElement.remove()'></span>
+                </li>
+            </ul>
+            <a class="btn a-btn" asp-page="Genres">Редагувати жанри</a>    <br>
+            <input type="text" name="Movie.Genres" id="hiddenInput">
+            <span asp-validation-for="Movie.Genres"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Режисери*</label>
+        <div class="col-sm-4">
+            <ul class="list-unstyled can-remove" id="directors">
+                @if (Model.Movie.Directors != null) {
+                    <li class="d-li">
+                        <input type='text' class='form-control' placeholder="Ім'я" asp-for="Movie.Directors" value="@Model.Movie.Directors[0]">
+                    </li>
+                    @for (int i = 1; i < Model.Movie.Directors.Count; i++) {
+                        <li class="d-li">
+                            <input type='text' class='form-control' placeholder="Ім'я" asp-for="Movie.Directors" value="@Model.Movie.Directors[i]">
+                            <span class='btn btn-link glyphicon glyphicon-remove' onclick='this.parentElement.remove()'></span>
+                        </li>
+                    }
+                }
+                else {
+                    <li class="d-li">
+                        <input type='text' class='form-control' placeholder='Name' asp-for="Movie.Directors">
+                    </li>
+                }
+                <li class="d-li" hidden>
+                    <input type='text' class='form-control' placeholder='Name'>
+                    <span class='btn btn-link glyphicon glyphicon-remove' onclick='this.parentElement.remove()'></span>
+                </li>
+            </ul>
+            <input type="button" class="btn" value="Додати" onclick="addTextBox(directors, 'Movie.Directors')" />   <br />
+            <span asp-validation-for="Movie.Directors"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Актори</label>
+        <div class="col-sm-4">
+            <ul class="list-unstyled can-remove" id="actors">
+                @foreach (var a in Model.Movie.Actors) {
+                    <li class="d-li">
+                        <input type='text' class='form-control' placeholder="Ім'я" name='Movie.Actors' value="@a">
+                        <span class='btn btn-link glyphicon glyphicon-remove' onclick='this.parentElement.remove()'></span>
+                    </li>
+                }
+                <li class="d-li" hidden>
+                    <input type='text' class='form-control' placeholder="Ім'я">
+                    <span class='btn btn-link glyphicon glyphicon-remove' onclick='this.parentElement.remove()'></span>
+                </li>
+            </ul>
+            <input type="button" class="btn" value="Додати" onclick="addTextBox(actors, 'Movie.Actors')">   <br />
+            <input type="text" name="Movie.Actors" id="hiddenInput">
+            <span asp-validation-for="Movie.Actors"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Студія</label>
+        <div class="col-sm-4">
+            <ul class="list-unstyled can-remove" id="studios">
+                @foreach (var s in Model.Movie.Studios) {
+                    <li class="d-li">
+                        <input type='text' class='form-control' placeholder="Назва" name='Movie.Studios' value="@s">
+                        <span class='btn btn-link glyphicon glyphicon-remove' onclick='this.parentElement.remove()'></span>
+                    </li>
+                }
+                <li class="d-li" hidden>
+                    <input type='text' class='form-control' placeholder='Назва'>
+                    <span class='btn btn-link glyphicon glyphicon-remove' onclick='this.parentElement.remove()'></span>
+                </li>
+            </ul>
+            <input type="button" class="btn" value="Додати" onclick="addTextBox(studios, 'Movie.Studios')"> <br />
+            <input type="text" name="Movie.Studios" id="hiddenInput">
+            <span asp-validation-for="Movie.Studios"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="area">Опис*</label>
+        <div class="col-sm-4">
+            <textarea id="area" asp-for="Movie.Summary" value="@Model.Movie.Summary" class="form-control" rows="6" placeholder="Короткий опис стрічки"></textarea>
+            <span asp-validation-for="Movie.Summary"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="Movie_Year">Рік*</label>
+        <div class="col-sm-2">
+            <input type="number" class="form-control" placeholder="Рік прем'єри" asp-for="Movie.Year" value="@Model.Movie.Year">
+            <span asp-validation-for="Movie.Year"></span>
+        </div>
+    </div>
+    <div class="form-group" onload="resetValues()">
+        <label class="col-sm-2 control-label" for="Movie_Rate">Оцінка*</label>
+        <div class="col-sm-2">
+            <input type="number" asp-for="Movie.Rate" value="@Model.Movie.Rate" class="form-control" placeholder="Оцінка" />
+            <span asp-validation-for="Movie.Rate"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Зображення</label>
+        <div class="col-sm-4">
+            <input type="file" class="form-control" name="image" accept=".jpeg,.jpg,.png">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Відеофайл</label>
+        <div class="col-sm-4">
+            <input type="file" class="form-control" name="video" accept=".mp4,.avi,.mpeg,.mpg">
+            <span class="small">Зауваження: завантаження відеофайлу може заняти декілька хвилин!</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+            <button type="submit" class="btn btn-primary">Зберегти</button>
+        </div>
+    </div>
+</form>
+
